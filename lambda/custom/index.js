@@ -13,6 +13,7 @@
 'use strict';
 
 const Alexa = require('alexa-sdk');
+const dashbot = require('dashbot')('REPLACE_WITH_YOUR_DASHBOT_API_KEY').alexa;
 const questions = require('./question');
 
 const ANSWER_COUNT = 4; // The number of possible answers per trivia question.
@@ -378,11 +379,11 @@ const helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
     },
 });
 
-exports.handler = function (event, context) {
+ exports.handler = dashbot.handler(function(event, context) {
     const alexa = Alexa.handler(event, context);
     alexa.appId = APP_ID;
     // To enable string internationalization (i18n) features, set a resources object.
     alexa.resources = languageString;
     alexa.registerHandlers(newSessionHandlers, startStateHandlers, triviaStateHandlers, helpStateHandlers);
     alexa.execute();
-};
+});
